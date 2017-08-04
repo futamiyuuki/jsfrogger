@@ -53,10 +53,9 @@ Enemy.prototype.render = function() {
 // Now write your own player class
 // This class requires an update(), render() and
 // a handleInput() method.
-const Player = function(x, y, speed) {
+const Player = function(x, y) {
     this.x = x;
     this.y = y;
-    //this.speed = speed;
     this.sprite = 'images/char-boy.png';
     //this.sprite = 'images/enemy-bug.png';
 }
@@ -103,7 +102,7 @@ Player.prototype.handleInput = function(dir) {
 let score = 0;
 const initial_enemy = new Enemy(-tile_width, getRandomEnemyHeight(), getRandomEnemySpeed());
 const allEnemies = [initial_enemy];
-const player = new Player(tile_width * 2, tile_height * 5 - height_gap, 50);
+const player = new Player(tile_width * 2, tile_height * 5 - height_gap);
 
 
 // This listens for key presses and sends the keys to your
@@ -111,9 +110,13 @@ const player = new Player(tile_width * 2, tile_height * 5 - height_gap, 50);
 document.addEventListener('keyup', function(e) {
     var allowedKeys = {
         37: 'left',
+        65: 'left',
         38: 'up',
+        87: 'up',
         39: 'right',
-        40: 'down'
+        68: 'right',
+        40: 'down',
+        83: 'down'
     };
 
     player.handleInput(allowedKeys[e.keyCode]);
