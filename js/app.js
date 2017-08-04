@@ -15,7 +15,7 @@ const getRandomEnemyHeight = () => {
 };
 
 const getRandomEnemySpeed = () => {
-    return Math.floor(Math.random() * 400) + 100;
+    return ~~(Math.random() * 400) + 100;
 };
 
 // Enemies our player must avoid
@@ -92,6 +92,7 @@ Player.prototype.handleInput = function(dir) {
         if(this.y === -height_gap) {
             this.y = tile_height * 5 - height_gap;
             ++score;
+            allEnemies.push(new Enemy(-tile_width, getRandomEnemyHeight(), getRandomEnemySpeed()));
         }
     } else { console.log('out of bounds - x:' + this.x + ' y:' + this.y); }
 };
@@ -100,8 +101,7 @@ Player.prototype.handleInput = function(dir) {
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
 let score = 0;
-const initial_enemy = new Enemy(-tile_width, getRandomEnemyHeight(), getRandomEnemySpeed());
-const allEnemies = [initial_enemy];
+const allEnemies = [new Enemy(-tile_width, getRandomEnemyHeight(), getRandomEnemySpeed())];
 const player = new Player(tile_width * 2, tile_height * 5 - height_gap);
 
 
