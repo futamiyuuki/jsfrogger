@@ -4,6 +4,7 @@ const canvas_height = 606;
 const tile_width = 101;
 const tile_height = 83;
 const height_gap = 27;
+const collision_leniency = .7;
 
 // helper functions
 const isCharInBound = (x, y) => {
@@ -16,6 +17,19 @@ const getRandomEnemyHeight = () => {
 
 const getRandomEnemySpeed = () => {
     return ~~(Math.random() * 400) + 100;
+};
+
+const isColliding = (a, b) => {
+    const diff_x = Math.abs(a.x - b.x);
+    const diff_y = Math.abs(a.y - b.y);
+    return diff_x < tile_width * collision_leniency && diff_y < tile_height * collision_leniency;
+};
+
+const resetGame = () => {
+    score = 0;
+    allEnemies = [new Enemy(-tile_width, getRandomEnemyHeight(), getRandomEnemySpeed())];
+    player.x = tile_width * 2;
+    player.y = tile_height * 5 - height_gap;
 };
 
 // Enemies our player must avoid
@@ -37,6 +51,10 @@ Enemy.prototype.update = function(dt) {
     // You should multiply any movement by the dt parameter
     // which will ensure the game runs at the same speed for
     // all computers.
+    if(isColliding(this, player)) {
+        resetGame();
+        return;
+    }
     this.x += this.speed * dt;
     if(this.x > canvas_width) {
         this.x = -tile_width;
@@ -101,8 +119,9 @@ Player.prototype.handleInput = function(dir) {
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
 let score = 0;
-const allEnemies = [new Enemy(-tile_width, getRandomEnemyHeight(), getRandomEnemySpeed())];
+let allEnemies = [new Enemy(-tile_width, getRandomEnemyHeight(), getRandomEnemySpeed())];
 const player = new Player(tile_width * 2, tile_height * 5 - height_gap);
+//resetGame();
 
 
 // This listens for key presses and sends the keys to your
