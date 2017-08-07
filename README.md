@@ -1,1 +1,3 @@
-Udacity Frogger Game
+Frogger Game
+
+Object Oriented Javascript project from Udacity.
